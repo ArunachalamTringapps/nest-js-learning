@@ -1,11 +1,12 @@
+
 import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
-export class CreateUserInputs {
+export class UpdateUserInputTs {
   @Field()
   fullname: string;
   @Field()
   phoneNumber:number
   @Field({nullable:true})
-  createdAt:Date;
+  updateat:Date
 }

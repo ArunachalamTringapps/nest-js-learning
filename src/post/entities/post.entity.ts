@@ -2,10 +2,14 @@ import { ObjectType, Field } from '@nestjs/graphql';
 import { User } from 'src/user/entities/user.entity';
 import {
   Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
+
 } from 'typeorm';
 
 @ObjectType()
@@ -18,6 +22,22 @@ export class Post {
   @Field()
   @Column({ name: 'post_name' })
   name: string;
+
+  @Field({nullable:true})
+  @Column({name:"PostOrderNumber",type:"numeric",nullable:true})
+  PostOrderNumber:number
+
+  @Field({nullable:true})
+  @CreateDateColumn({name:"Created_at_post",type:'timestamp',nullable:true})
+  createdAt:Date;
+
+  @Field({nullable:true})
+  @Column({name:"Updated_at_post",type:"timestamp",nullable:true})
+  updatedat:Date
+
+  @Field({nullable:true})
+  @DeleteDateColumn({name:"Deleted_at_post",type:"timestamp",nullable:true})
+  deletedat:Date
 
   @Field()
   @ManyToOne(() => User, (user) => user.post)

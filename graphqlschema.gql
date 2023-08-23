@@ -3,32 +3,70 @@
 # ------------------------------------------------------
 
 input CreatePostInput {
-  postName: String!
+  PostOrderNumber: Float
+  createdAt: DateTime
+  deletedat: DateTime
+  postName: String
+  updatedat: DateTime
   userId: String!
 }
 
 input CreateUserInputs {
+  createdAt: DateTime
   fullname: String!
+  phoneNumber: Float!
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Mutation {
-  createPost(createPostInput: CreatePostInput!): Post!
+  CreatePost(createPostInput: CreatePostInput!): Post!
+  Deletepost(id: String!): Post!
+  UpdatePost(id: String!, updatepost: UpdatePostInput!): Post!
+  UpdateUser(id: String!, updateUserInput: UpdateUserInputTs!): User!
   createUser(createUserInputs: CreateUserInputs!): User!
+  deleteuser(id: String!): User!
 }
 
 type Post {
+  PostOrderNumber: Float
+  createdAt: DateTime
+  deletedat: DateTime
   id: String!
   name: String!
+  updatedat: DateTime
   user: User!
   userId: String!
 }
 
 type Query {
+  getAllPost: [Post!]!
+  getAllUsers: [User!]!
+  getPostById(id: String!): Post!
   getUserById(id: String!): User!
 }
 
+input UpdatePostInput {
+  name: String!
+  updatedat: DateTime = "2023-08-23T13:10:15.794Z"
+  userId: String
+}
+
+input UpdateUserInputTs {
+  fullname: String!
+  phoneNumber: Float!
+  updateat: DateTime
+}
+
 type User {
+  createdAt: DateTime
+  deletedat: DateTime
   fullname: String!
   id: String!
+  phoneNumber: Float!
   post: [Post!]
+  updatedat: DateTime
 }

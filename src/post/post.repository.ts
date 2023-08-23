@@ -11,9 +11,14 @@ export class PostRepository extends BaseRepository<Post> {
   }
 
   async createPost(createPostInput: CreatePostInput) {
-    return this.save({
-      name: createPostInput.postName,
-      userId: createPostInput.userId,
-    });
+    const{userId,postName}=createPostInput
+    const newPost=new Post();
+    newPost.name=postName
+    newPost.userId=userId;
+    const count=await this.count({where:{userId:newPost.userId}})
+    newPost.PostOrderNumber=count+1
+    return this.save(
+     newPost
+    );
   }
 }

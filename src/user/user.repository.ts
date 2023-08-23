@@ -11,8 +11,7 @@ export class UserRepository extends BaseRepository<User> {
   }
 
   public async createUser(createUserInputs: CreateUserInputs) {
-    return this.save({
-      fullname: createUserInputs.fullname,
-    });
+    return this.save(createUserInputs);
   }
+
 }
