@@ -27,7 +27,10 @@ export class PostService {
    
   }
   async UpdatePost(id,updatepost){
-    await this.postRepo.update(id,updatepost)
+  const updatedid=  await this.postRepo.update(id,updatepost)
+  if(updatedid.affected==0){
+    throw new NotFoundException(`Here the post id ${id} is not found to update`)
+  }
     return this.postRepo.findOne({where:{id}})
   }
   async DeletePost(id){

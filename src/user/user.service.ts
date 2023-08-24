@@ -21,13 +21,20 @@ export class UserService {
     //   .leftJoinAndSelect('user.post', 'p')
     //   .where('user.id =:id', { id })
     //   .getOne();
-    return this.userRepo.findOne({relations:['post'],where:{id}})
+    const getuserbyid=await this.userRepo.findOne({relations:['post'],where:{id}})
+    if(!getuserbyid){
+      throw new Error(`The user ${id} is not found`)
+    }
+    return getuserbyid
   }
   public async getAllUser(){
     return this.userRepo.find({ relations: ['post'] });
   }
   public async UpdateUser(id: string, updateUserInput: UpdateUserInputTs){
     const userToUpdate = await this.userRepo.findOne({where:{id}});
+    if(!userToUpdate){
+      throw new Error(`The user Id ${id} is not found to update`)
+    }
     userToUpdate.fullname = updateUserInput.fullname;
     userToUpdate.phoneNumber=updateUserInput.phoneNumber;
     userToUpdate.updatedat=new Date();
